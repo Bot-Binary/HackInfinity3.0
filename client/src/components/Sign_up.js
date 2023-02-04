@@ -38,8 +38,8 @@ export default function Sign_up() {
   return (
 <>
     <Toaster />
-
-    <div className="container">
+      <div className='bodyx'>
+    <div className="containerx">
       <div className="title">Registration</div>
       <div className="content">
         <form onSubmit={handleSubmit}>
@@ -99,6 +99,7 @@ export default function Sign_up() {
         <span>Already have an account ?<Link to='/login'> Click here</Link></span>
 
       </div>
+    </div>
     </div>
     </>
   )

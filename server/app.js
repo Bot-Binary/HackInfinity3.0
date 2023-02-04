@@ -3,6 +3,7 @@ const { mongo, default: mongoose } = require("mongoose");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const  passwordverify = require("./middleware/auth")
+require("mongoose-unique-array");
 
 // files
 require("./db/conn");
@@ -166,9 +167,9 @@ app.post("/addchild", async (req, res) => {
 
     try {
         const data = req.body;
-
+        // console.log("DDDDDDDDDD");
         const sid = data.sid;
-        const spass = data.spassword;
+        // const spass = data.spassword;
         const jid = data.jid;
         const jpass = data.jpassword;
         const matchs = await senior.findOne({ email: sid });
@@ -178,25 +179,76 @@ app.post("/addchild", async (req, res) => {
         console.log(matchj);
 
         if (matchs && matchj) {
-            // console.log("AAA");
+            console.log("AAA");
 
-            const result1 = await bcrypt.compare(spass, matchs.password);
+            // const result1 = await bcrypt.compare(spass, matchs.password);
             const result2 = await bcrypt.compare(jpass, matchj.password);
 
-            if (result1 && result2) {
+            if (result2) {
+                console.log("es");
                 const j_id = matchj._id;
-                // console.log("es");
 
-                const res = await senior.updateOne({ email: sid }, { $push: { children: j_id } });
-                console.log(res);
+                const result = await senior.updateOne({ email: sid }, { $addToSet:{ children:{id :j_id , name :matchj.name, balance : matchj.balance }}});
+                const abc = await junior.updateOne({email:jid},{$set:{pid:sid}});
+                console.log(result);
+                res.send("DONE");
 
             }
             else {
-                res.send("WRONG");
+                res.send("EMPTY");
             }
         }
         else {
-            res.send("WRONG");
+            res.send("EMPTY");
+        }
+    }
+    catch {
+        (err) => {
+            console.log("THIS ERR FROM ADD CHILD TO PARENT PART");
+            console.log(err);
+        }
+    }
+
+})
+
+
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+app.post("/dropchild", async (req, res) => {
+
+    try {
+        const data = req.body;
+
+        const sid = data.sid;
+        // const spass = data.spassword;
+        const jid = data.jid;
+        const jpass = data.jpassword;
+        const matchs = await senior.findOne({ email: sid });
+        const matchj = await junior.findOne({ email: jid });
+
+        console.log(matchs);
+        console.log(matchj);
+
+        if (matchs && matchj) {
+            console.log("AAA");
+
+            // const result1 = await bcrypt.compare(spass, matchs.password);
+            const result2 = await bcrypt.compare(jpass, matchj.password);
+
+            if (result2) {
+                const j_id = matchj._id;
+                console.log("es");
+
+                const result = await senior.updateOne({ email: sid }, { $pull:{ children:{id :j_id , name :matchj.name, balance : matchj.balance }}});
+                console.log(result);
+                res.send("DONE");
+            }
+            else {
+                res.send("EMPTY");
+            }
+        }
+        else {
+            res.send("EMPTY");
         }
     }
     catch {
@@ -212,27 +264,29 @@ app.post("/addchild", async (req, res) => {
 app.post("/add/type",async(req,res)=>{
     try{
         const data = req.body;
-        const  senior_pass = data.senior_password;
 
+        const senior_pass = data.senior_password;
         const junior_id = data.junior_id;
         const senior_id = data.senior_id;
-        const type = data.category;
-
+        const category = data.category;
+        
         const match = await senior.findOne({email:senior_id});
 
+        const match1 = await junior.findOne({email:junior_id});
+ 
         const result1 = await bcrypt.compare(senior_pass, match.password);
 
-        if(result1){
 
-            const match_junior = await junior.findOne({email:junior_id});
+        if(result1 && match1){
 
-            const res = await junior.updateOne({ email: junior_id }, { $push: { category: type } });
+            const result = await junior.updateOne({ email: junior_id },{ $addToSet : { allowed:{ id : category}}});
 
-            console.log(res);
+            res.send("DONE");
+
 
         }
         else{
-            red.send("WRONG");
+            res.send("WRONG");
         }
 
     }
@@ -245,23 +299,26 @@ app.post("/add/type",async(req,res)=>{
 app.post("/drop/type",async(req,res)=>{
     try{
         const data = req.body;
-        const senior_pass = data.senior_password;
 
+        const senior_pass = data.senior_password;
         const junior_id = data.junior_id;
         const senior_id = data.senior_id;
-        const type = data.category;
+        const category = data.category;
 
-        const match = await senior.findOne({email:senior_id});
+        const match1 = await senior.findOne({email:senior_id});
+        const match2 = await junior.findOne({email:junior_id});
 
-        const result1 = await bcrypt.compare(senior_pass, match.password);
+        const result1 = await bcrypt.compare(senior_pass, match1.password);
 
-        if(result1){
+        if(result1 && match2){
 
             const match_junior = await junior.findOne({email:junior_id});
 
-            const res = await junior.updateOne({ email: junior_id }, { $pull: { category: type } });
-
-            console.log(res);
+            const res = await junior.updateOne({ email: junior_id },{ $pull : { allowed:{ id : category}}});
+            
+            console.log("err");
+      
+            res.send("DONE");
 
         }
         else{
@@ -276,8 +333,83 @@ app.post("/drop/type",async(req,res)=>{
 
 
 
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+app.post("/pay",async (req,res)=>{
+    try{
+
+        const data = req.body;
+        
+
+        const pass = data.password;
+        const junior_id = data.juniorid;
+        const category = data.category;
+        const senior = data.seniorid;
+        const amount = data.amount;
+        console.log("XXX");
+        const matchj = await junior.findOne({email:junior_id});
+        const matchs = matchj.pid;
+        // const match_password = await junior.findOne({email:junior_id});
+        // console.log(match);
+        if(match){
+            const match_password = await junior.findOne({email:junior_id});
+
+            if(match_password){
+                const all_cat = match.allowed;
+                const result = all_cat.filter(obj => {
+                    return obj.id === category
+                })
+                if(result){
+                    if(amount<=matchj.balance){
+                        matchj.balance = matchj.balance - amount;
+
+                    }
+                    else{
+                        res.send("INSUFFICIENT");
+                    }
+                }
+                else{
+                    // EMAIL TO PARENT>>>>>>>>>>>>>>>>>>>
+                }
+            }
+            else{
+                res.send("WRONG");
+            }
 
 
+
+
+
+
+            const all_cat = match.allowed;
+            console.log(all_cat);
+            console.log("AAAAAAAAAA");
+            
+            
+
+            // console.log(result);
+
+            if(result){
+
+
+
+
+                console.log("DDDJJJ");
+            }
+            else{
+                console.log("fff");
+                console.log(iS_in);
+            }
+        }
+        else{
+            res.send("NOTMATCHING");
+        }
+
+
+    }catch{(e)=>{
+
+    }}
+})
 
 
 
@@ -297,12 +429,21 @@ app.post("/drop/type",async(req,res)=>{
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 app.get("/history", async (req, res) => {
     try{
+        console.log(req);
+        const data = req.body;
+        console.log(data);
+        const junior = data.junior_id;
+        console.log(junior);
+        
+        const result = await history.find({from : junior});
 
-
+        console.log(result);
+        res.send(result);
 
     }catch{(err)=>{
         console.log("THIS ERROR FROM GETTING HISTORY PART");
         console.log(err);
+        res.send("ERROR");
     }}
 })
 
@@ -324,20 +465,6 @@ app.get("/junior",async (req,res)=>{
 })
 
 
-app.get("/junior",async (req,res)=>{
-    try{
-
-        const mail = req.body.email;
-
-        const match = await junior.findOne({email:mail});
-        
-        res.send(match);
-
-    }
-    catch{(err)=>{
-        console.log("THIS ERROR ID FROM INDIVIDUAL GET DATA REQUEST JUNIOR");
-    }}
-})
 
 
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

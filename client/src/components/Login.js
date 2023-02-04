@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom'
 import {POSTlogin} from '../utilities/axios/Paths'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import "../App.css"
 
 export default function Sign_up() {
 
+  const navigate= useNavigate();
+
+  var auth = false;
   const [formData, setFormData] = useState(
     {
       email: "",
@@ -25,14 +30,19 @@ export default function Sign_up() {
 
   function handleSubmit(event) {
     event.preventDefault()
-    POSTlogin(formData);
+    const Loggedin = POSTlogin(formData, auth);
+    console.log(Loggedin);
+    if(Loggedin === true){
+      navigate('/fake');
+    }
   }
 
   return (
 
     <>
     <Toaster />
-    <div className="container" style={{"transform":"scale(1.2)"}}>
+    <div className='bodyx'>
+    <div className="containerx">
       <div className="title">Login</div>
       <div className="content">
         <form onSubmit={handleSubmit}>
@@ -73,6 +83,7 @@ export default function Sign_up() {
         <span>Don't  have an account ?<Link to='/signup'> Click here</Link></span>
 
       </div>
+    </div>
     </div>
     </>
   )

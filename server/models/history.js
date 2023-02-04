@@ -32,3 +32,23 @@ const schema = mongoose.Schema({
 const history = mongoose.model("history",schema);
 
 module.exports = history;
+
+/** 
+* Paste one or more documents here
+*/
+// {
+//     "_id": {
+//       "$oid": "63de68537aa5e1c535cb1c3b"
+//     },
+//     "from": "07622051688@bot",
+//     
+// type: "Enterntainment"
+// to:"1234567890@bot"
+        // "amount" 1000
+//   }
+
+
+// "from":"07622051688@bot"
+// 'type':"Grocery"
+// 'to':"9510808080@bot"
+// amount:1000

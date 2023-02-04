@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+require("mongoose-unique-array");
 
-
+// schema.plugin(arrayUniquePlugin);
 
 const schema = mongoose.Schema({
     name:{
@@ -47,13 +48,18 @@ const schema = mongoose.Schema({
         type:String,
         required:true
     },
-    children:
-        {
-           type:[{
-            id:String,
-            
-        }]
-        }
+    children:{
+        type:[{
+            id:{
+                type:String,
+                unique:true
+            },
+            name:String,
+            balance:Number,
+        },
+    ] 
+    //  unique:true   
+    }
     ,
     balance:{
         type:Number,
@@ -67,7 +73,7 @@ const schema = mongoose.Schema({
 })
 
 
-
+// schema.plugin(arrayUniquePlugin);
 
 schema.pre("save",(async function(next){
 
