@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom"
 
 const Sidenavbar = () => {
   return (
@@ -9,29 +10,29 @@ const Sidenavbar = () => {
 
     <ul className="list-unstyled components">
       <li className="active">
-        <a href="#homeSubmenu" data-toggle="collapse">
+        <Link to="/Parent" data-toggle="collapse">
           Home
-        </a>
+        </Link>
         <ul className="collapse list-unstyled" id="homeSubmenu">
           <li>
-            <a href="/">Home 1</a>
+            <Link to="/">Home 1</Link>
           </li>
         </ul>
       </li>
       <li>
-        <a href="/childusers">Child Users</a>
+        <Link to="/Parent/Child-Users">Child Users</Link>
       </li>
       <li>
-        {/* <a href="/">Contact</a> */}
-        <a href="/contact">Contact</a>
+        {/* <a to="/">Contact</a> */}
+        <Link to="/contact">Contact</Link>
       </li>
       <li>
-        {/* <a href="/">Edit Profile</a> */}
-        <a href="/edit_profile">Edit Profile</a>
+        {/* <a to="/">Edit Profile</a> */}
+        <Link to="/Profile">Profile</Link>
       </li>
       <li>
-        {/* <a href="/">Logout</a> */}
-        <a href="/logout">Logout</a>
+        {/* <a to="/">Logout</a> */}
+        <Link to="/login">Logout</Link>
       </li>
     </ul>
   </nav>

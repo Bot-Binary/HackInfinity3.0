@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
+import ChildNav from "./ChildNav";
 import Sidenavbar from "./Sidenavbar";
-const Profile = () => {
+const ChildProfile = () => {
   const [profile, setProfile] = useState({ email: "", phoneno: "", name: "" });
   const ref = useRef(null);
   const refClose = useRef(null);
@@ -30,7 +31,7 @@ const Profile = () => {
       <div>
         <div className="wrapper">
 
-          <Sidenavbar />
+          <ChildNav/>
           <button
             type="button"
             ref={ref}
@@ -175,4 +176,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ChildProfile;

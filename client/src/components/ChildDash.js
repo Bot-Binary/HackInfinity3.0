@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import ChildNav from "./ChildNav";
 import QrScanner from "qr-scanner";
 
+
 const ChildDash = () => {
   // const [shopName, setShopName] = useState("");
   

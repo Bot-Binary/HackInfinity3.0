@@ -1127,3 +1127,34 @@ form .user-details .input-box1{
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 } */
+.page_error{
+  padding:20px 0px;
+  background:#fff;
+  font-family:Arial, Helvetica, sans-serif;
+}
+.page_error img{
+  width: 100%;
+}
+.four_zero_four_bg{
+  background-image:url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif) ;
+  height:550px;
+  background-position: center;
+}
+.four_zero_four_bg h1{
+  font-size:80px;
+  
+}
+.contant_box_404 {
+  margin-top: -50px;
+}
+.contant_box_404 h3{
+  font-size: 80px;
+}
+.link_404{
+  color: #fff !important;
+  padding:10px 20px;
+  background: #39ac31;
+  border-radius: 20px;
+  margin:5px 0px;
+  display: inline-block;    
+}

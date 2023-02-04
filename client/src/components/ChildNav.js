@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Link} from "react-router-dom";
 const ChildNav = () => {
   return (
     <nav id="sidebar">
@@ -9,26 +9,26 @@ const ChildNav = () => {
 
     <ul className="list-unstyled components">
       <li className="active">
-        <a href="#homeSubmenu" data-toggle="collapse">
+        <Link to="/Child" data-toggle="collapse">
           Home
-        </a>
+        </Link>
         <ul className="collapse list-unstyled" id="homeSubmenu">
           <li>
-            <a href="/">Home 1</a>
+            <Link to="/">Home 1</Link>
           </li>
         </ul>
       </li>
       <li>
-        {/* <a href="/">Contact</a> */}
-        <a href="/contact">Contact</a>
+        {/* <Link to="/">Contact</a> */}
+        <Link to="/contact">Contact</Link>
       </li>
       <li>
-        {/* <a href="/">Edit Profile</a> */}
-        <a href="/edit_profile">Edit Profile</a>
+        {/* <Link to="/">Edit Profile</a> */}
+        <Link to="/ChildProfile"> Profile</Link>
       </li>
       <li>
-        {/* <a href="/">Logout</a> */}
-        <a href="/logout">Logout</a>
+        {/* <Link to="/">Logout</a> */}
+        <Link to="/Login">Logout</Link>
       </li>
     </ul>
   </nav>

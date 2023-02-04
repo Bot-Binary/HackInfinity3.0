@@ -1,7 +1,7 @@
 import Sidenavbar from "./Sidenavbar";
 import {Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function ChildDetail() {
   return (
 
     <div className="wrapper">
