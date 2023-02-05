@@ -1,7 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Sidenavbar from "./Sidenavbar";
 const Profile = () => {
   const [profile, setProfile] = useState({ email: "", phoneno: "", name: "" });
+  const [sprofile, setSProfile] = useState({});
+  const [history, setHistory] = useState({});
+  let localprofile = {};
+  let localhistory = [];
+
+  useEffect(() => {
+    localprofile = JSON.parse(localStorage.getItem('Profile'));
+    if (localprofile) setSProfile(localprofile);
+    console.log(localprofile)
+
+    // if (localhistory) setHistory(localhistory);
+    // console.log(history);
+  }, []);
   const ref = useRef(null);
   const refClose = useRef(null);
   const handleClick = () => {
@@ -65,7 +78,7 @@ const Profile = () => {
                         Email
                       </label>
                       <input
-                        value={profile.email}
+                        value={sprofile.email}
                         type="email"
                         className="form-control"
                         id="email"
@@ -80,7 +93,7 @@ const Profile = () => {
                         Mobile Number
                       </label>
                       <input
-                        value={profile.phoneno}
+                        value={sprofile.phone}
                         type="text"
                         className="form-control"
                         id="phoneno"
@@ -95,7 +108,7 @@ const Profile = () => {
                         Tag
                       </label>
                       <input
-                        value={profile.name}
+                        value={sprofile.name}
                         type="text"
                         className="form-control"
                         id="name"
@@ -139,7 +152,7 @@ const Profile = () => {
                       <div className="col-md-4 gradient-custom text-center text-white" style={{ "border-top-left-radius": "border-top-left-radius" }}>
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                           alt="Avatar" className="img-fluid my-5" style={{ "width": "80px" }} />
-                        <h5 style={{ "color": "black" }}>Marie Horwitz</h5>
+                        <h5 style={{ "color": "black" }}>{sprofile.name}</h5>
                         <button className="btn btn-outline-dark mb-5" onClick={editProfile} >Edit Profile</button>
                         <i className="far fa-edit mb-5"></i>
                       </div>
@@ -148,11 +161,11 @@ const Profile = () => {
                           <div className="d-flex flex-column pt-2 mt-5">
                             <div className="col-6 mb-3">
                               <h6>Email</h6>
-                              <p className="text-muted">info@example.com</p>
+                              <p className="text-muted">{sprofile.email}</p>
                             </div>
                             <div className="col-6 mb-3">
                               <h6>Phone</h6>
-                              <p className="text-muted">123 456 789</p>
+                              <p className="text-muted">{sprofile.phone}</p>
                             </div>
                           </div>
 

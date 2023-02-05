@@ -1,64 +1,52 @@
-import nodemailer from 'nodemailer';
-import Mailgen from 'mailgen';
-
-// import ENV from '../';
+const nodemailer = require('nodemailer');
+ 
 
 
-// https://ethereal.email/create
-let nodeConfig = {
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+let mailDetails = {
+    from: 'blogitttt@gmail.com',
+    to: '',
+    subject: 'Test mail',
+    text: 'Node.js testing mail for GeeksforGeeks'
+};
+
+
+const mailTransporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com', 
+    port:'587',
     auth: {
-        user: process.env.EMAIL, // generated ethereal user
-        pass: process.env.PASSWORD, // generated ethereal password
+        user: 'blogitttt@gmail.com',
+        pass: 'wsphafogqrmolnvi'
     }
-}
-
-let transporter = nodemailer.createTransport(nodeConfig);
-
-let MailGenerator = new Mailgen({
-    theme: "default",
-    product : {
-        name: "Mailgen",
-        link: 'https://mailgen.js/'
-    }
+});
+ 
+const approved_email = ((category,amount,name,p_mail)=>{
+    mailDetails.to = p_mail;
+    mailDetails.subject = "Payment By Your Child";
+    mailDetails.text  =`ALERT! \n${name} has made the payment of ${amount} Rs at the store ${category}.The payment was made using the HackInfinity website.\nThanks 
+    Regards,\n
+    HackInfinity`
 })
 
-/** POST: http://localhost:8080/api/registerMail 
- * @param: {
-  "username" : "example123",
-  "userEmail" : "admin123",
-  "text" : "",
-  "subject" : "",
-}
-*/
-export const registerMail = async (req, res) => {
-    const { username, userEmail, text, subject } = req.body;
+const approved_email_child = ((category,amount,junior_id,name)=>{
+    mailDetails.to = junior_id;
+    mailDetails.subject = `Hey ${name}`;
+    mailDetails.text  =`You have made a payment of ${amount} at ${category}.\n By Hackinfinity`
+})
 
-    // body of the email
-    var email = {
-        body : {
-            name: username,
-            intro : text || 'Welcome to Daily Tuition! We\'re very excited to have you on board.',
-            outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
-        }
+
+const declined_email = ((category,amount,name,p_mail)=>{
+    mailDetails.to = p_mail;
+    mailDetails.subject = `Unappropriate Payment By ${name}`;
+    mailDetails.text  =`ALERT!,\n
+            ${name} is trying to make payement of ${amount} at the ${category}. which is not in your preffered List.`
+})
+
+ 
+mailTransporter.sendMail(mailDetails, function(err, data) {
+    if(err) {
+        console.log('Error Occurs');
+        console.log(err);
+    } else {
+        console.log('Email sent successfully');
     }
-
-    var emailBody = MailGenerator.generate(email);
-
-    let message = {
-        from : ENV.EMAIL,
-        to: "shubham13495@gmail.com",
-        subject : subject || "TRIAL",
-        html : emailBody
-    }
-
-    // send mail
-    transporter.sendMail(message)
-        .then(() => {
-            return res.status(200).send({ msg: "You should receive an email from us."})
-        })
-        .catch(error => res.status(500).send({ error }))
-
-}
+});

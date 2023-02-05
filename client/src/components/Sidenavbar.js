@@ -5,11 +5,11 @@ const Sidenavbar = () => {
   return (
     <nav id="sidebar">
     <div className="sidebar-header sidex">
-      <h3>Bootstrap Sidebar</h3>
+      <h3>HackInfinity</h3>
     </div>
 
     <ul className="list-unstyled components">
-      <li className="active">
+      <li className="">
         <Link to="/Parent" data-toggle="collapse">
           Home
         </Link>
@@ -19,20 +19,18 @@ const Sidenavbar = () => {
           </li>
         </ul>
       </li>
-      <li>
-        <Link to="/Parent/Child-Users">Child Users</Link>
-      </li>
-      <li>
-        {/* <a to="/">Contact</a> */}
+      
+      {/* <li>
+        <a to="/">Contact</a>
         <Link to="/contact">Contact</Link>
-      </li>
+      </li> */}
       <li>
         {/* <a to="/">Edit Profile</a> */}
         <Link to="/Profile">Profile</Link>
       </li>
       <li>
         {/* <a to="/">Logout</a> */}
-        <Link to="/login">Logout</Link>
+        <Link to="/login" onClick={async () => await localStorage.clear()}>Logout</Link>
       </li>
     </ul>
   </nav>

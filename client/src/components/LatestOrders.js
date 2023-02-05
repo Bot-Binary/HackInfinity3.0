@@ -4,7 +4,7 @@ const LatestOrders = () => {
   return (
     <div>
       <div className="card mt-4 mx-4">
-        <div className="my-3 mx-4 fw-bold" style={{"color":"#242a38","font-size":"1.7rem"}}>Transaction Details</div>
+        <div className="my-3 mx-4 fw-bold" style={{"color":"#242a38","fontSize":"1.7rem"}}>Transaction Details</div>
         
         <div className="container text-center">
           <div className=" card-header mb-2">

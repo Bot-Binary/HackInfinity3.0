@@ -26,7 +26,7 @@ export async function POSTsignup(data) {
         else {
             toast.success("Logged in Successfully.")
             console.log(res.data);
-            return res.data;
+            return true;
         }
     }
     catch (e) {
@@ -36,7 +36,7 @@ export async function POSTsignup(data) {
 
 export async function POSTlogin(data) {
     try {
-        // console.log(data);
+        console.log(data);
 
         const res = await axios.post(`${BaseURL}/login`, data)
         console.log(res);
@@ -52,8 +52,7 @@ export async function POSTlogin(data) {
         else {
             toast.success("Logged in Successfully.")
             console.log(res.data);
-
-            return res.data;
+            return true;
         }
     } catch (e) {
         return ({ error: `Error in signup${e}` });
@@ -123,26 +122,6 @@ export async function POSTNewcategory(data) {
     }
 }
 
-export async function POSTaddtype(data) {
-    try {
-        console.log(data);
-        const res = await axios.post(`${BaseURL}/add/type`, data)
-        console.log(res);
-        if (res.data === 'WRONG') {
-            toast.error("Wrong credentials...");
-            console.log("wfdegf");
-            return false;
-        }
-        else if (res.data === 'DONE') {
-            toast.success("Category added successfully...")
-            console.log(res.data);
-            return true;
-        }
-    } catch (e) {
-        return ({ error: `Error in signup${e}` });
-    }
-}
-
 export async function POSTDropcategory(data) {
     try {
         console.log(data);
@@ -164,39 +143,13 @@ export async function POSTDropcategory(data) {
     }
 }
 
-export async function POSTAddmoney(data) {
-    try {
-        console.log(data);
-
-        const res = await axios.post(`${BaseURL}/addmoney`, data)
-        console.log(res);
-        if (res.data === 'WRONG') {
-            toast.error("Wrong credentials...");
-            console.log("wfdegf");
-            return false;
-        }
-        else if (res.data === 'INSUFFICIENT') {
-            toast.success("Insufficiant balance in wallet..")
-            console.log(res.data);
-            return true;
-        }
-        else if (res.data === 'DONE') {
-            toast.success("Money transfered successfully...")
-            console.log(res.data);
-            return true;
-        }
-    } catch (e) {
-        return ({ error: `Error in signup${e}` });
-    }
-}
-
 
 export async function GETPaymenthistory(data) {
     try {
-        console.log(data);
+        // console.log(data);
 
         const params = {
-            junior_id: data
+            junior_id: data.body.junior_id
         };
 
         const response = await axios.get(`${BaseURL}/history`, { params })
@@ -208,30 +161,7 @@ export async function GETPaymenthistory(data) {
         }
         toast.success("History founded...")
         console.log(response.data);
-        return response.data;
-    } catch (e) {
-        return ({ error: `Error in signup${e}` });
-    }
-}
-
-export async function GETJunior(data) {
-    try {
-        console.log(data);
-
-        const params = {
-            email: data
-        };
-
-        const response = await axios.get(`${BaseURL}/junior`, { params })
-        console.log(response);
-        if (response.data === 'ERROR') {
-            toast.error("Error occured while loading history...");
-            console.log("wfdegf");
-            return false;
-        }
-        toast.success("History founded...")
-        console.log(response.data);
-        return response.data;
+        return true;
     } catch (e) {
         return ({ error: `Error in signup${e}` });
     }
@@ -267,10 +197,3 @@ export async function POSTPayment(data) {
         return ({ error: `Error in signup${e}` });
     }
 }
-
-
-
-
-
-
-

@@ -1,19 +1,31 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import ChildNav from "./ChildNav";
 import Sidenavbar from "./Sidenavbar";
 const ChildProfile = () => {
-  const [profile, setProfile] = useState({ email: "", phoneno: "", name: "" });
+  // const [profile, setProfile] = useState({ email: "", phoneno: "", name: "" });
+
+  const [profile, setProfile] = useState({});
+  let localprofile = {};
+
+  useEffect(() => {
+    localprofile = JSON.parse(localStorage.getItem('Profile'));
+
+    
+
+    if(localprofile) setProfile(localprofile);
+  },[]);
+
   const ref = useRef(null);
   const refClose = useRef(null);
   const handleClick = () => {
 
   }
   const editProfile = () => {
-    ref.current.click();
+    ref.current.click(profile);
     setProfile({
-      email: "Bhavya@gmail.com",
-      phoneno: "820055454",
-      name: "Bhavya",
+      email: profile.email,
+      phoneno: profile.phone,
+      name: profile.name
 
     });
   };
@@ -93,7 +105,7 @@ const ChildProfile = () => {
                     </div>
                     <div className="mb-3">
                       <label htmlFor="tag" className="form-label">
-                        Tag
+                        Name
                       </label>
                       <input
                         value={profile.name}
@@ -131,7 +143,7 @@ const ChildProfile = () => {
           <section className="vh-120 container " style={{ "background-color": "#f4f5f7" }}>
 
             <div className="container  py-5 h-100">
-              <h6 className="text-center" style={{ "color": "#242a38", "font-size": "2.3rem", "margin-bottom": "-3rem" }}>Profile</h6>
+              <h6 className="text-center" style={{ "color": "#242a38", "fontSize": "2.3rem", "margin-bottom": "-3rem" }}>Profile</h6>
 
               <div className="row d-flex justify-content-center align-items-center h-100">
                 <div className="col col-lg-6 mb-4 mb-lg-0">
@@ -140,7 +152,7 @@ const ChildProfile = () => {
                       <div className="col-md-4 gradient-custom text-center text-white" style={{ "border-top-left-radius": "border-top-left-radius" }}>
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                           alt="Avatar" className="img-fluid my-5" style={{ "width": "80px" }} />
-                        <h5 style={{ "color": "black" }}>Marie Horwitz</h5>
+                        <h5 style={{ "color": "black" }}>{profile.name}</h5>
                         <button className="btn btn-outline-dark mb-5" onClick={editProfile} >Edit Profile</button>
                         <i className="far fa-edit mb-5"></i>
                       </div>
@@ -149,11 +161,11 @@ const ChildProfile = () => {
                           <div className="d-flex flex-column pt-2 mt-5">
                             <div className="col-6 mb-3">
                               <h6>Email</h6>
-                              <p className="text-muted">info@example.com</p>
+                              <p className="text-muted">{profile.email}</p>
                             </div>
                             <div className="col-6 mb-3">
                               <h6>Phone</h6>
-                              <p className="text-muted">123 456 789</p>
+                              <p className="text-muted">{profile.phone}</p>
                             </div>
                           </div>
 

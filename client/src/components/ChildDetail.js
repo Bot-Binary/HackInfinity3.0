@@ -19,7 +19,7 @@ export default function ChildDetail() {
             </h5>
             <p
               className="card-text"
-              style={{ "font-size": "1.3rem", color: "black" }}
+              style={{ "fontSize": "1.3rem", color: "black" }}
             >
               ₹ 1,00,000
             </p>
@@ -34,7 +34,7 @@ export default function ChildDetail() {
             </h5>
             <p
               className="card-text"
-              style={{ "font-size": "1.3rem", color: "black" }}
+              style={{ "fontSize": "1.3rem", color: "black" }}
             >
               ₹ 25,000
             </p>
@@ -65,7 +65,7 @@ export default function ChildDetail() {
     {/*  this/that child history with shops */}
     <div className="m-5 ">
             <div className="card mt-5">
-              <div className="my-3 mx-4 fw-bold" style={{ "color": "#242a38", "font-size": "1.7rem" }}>This/that child Transaction History</div>
+              <div className="my-3 mx-4 fw-bold" style={{ "color": "#242a38", "fontSize": "1.7rem" }}>This/that child Transaction History</div>
               <div className="container text-center">
                 <div className=" card-header mb-2">
                   <div className="row">

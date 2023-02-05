@@ -6,6 +6,7 @@ import Goterror from './components/Goterror';
 import Fake from './components/Fake';
 import Dashboard from './components/Dashboard';
 import ChildDash from './components/ChildDash';
+import Modal from './components/Modal';
 // import ChildHome from './components/ChildHome';   -- Childuser
 import ChildUsers from "./components/ChildUsers";
 import ChildDetail from "./components/ChildDetail";
@@ -33,6 +34,7 @@ function App() {
 
           {/* Child */}
            <Route path="/Child" element={<ChildDash />} />
+           <Route path="/modal" element={<Modal />} />
 
 
            <Route path='*' element={<Goterror />}></Route>

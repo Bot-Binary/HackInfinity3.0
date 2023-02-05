@@ -8,27 +8,22 @@ const ChildNav = () => {
     </div>
 
     <ul className="list-unstyled components">
-      <li className="active">
+      <li >
         <Link to="/Child" data-toggle="collapse">
           Home
         </Link>
-        <ul className="collapse list-unstyled" id="homeSubmenu">
-          <li>
-            <Link to="/">Home 1</Link>
-          </li>
-        </ul>
       </li>
-      <li>
-        {/* <Link to="/">Contact</a> */}
+      {/* <li>
+        <Link to="/">Contact</a>
         <Link to="/contact">Contact</Link>
-      </li>
+      </li> */}
       <li>
         {/* <Link to="/">Edit Profile</a> */}
         <Link to="/ChildProfile"> Profile</Link>
       </li>
       <li>
         {/* <Link to="/">Logout</a> */}
-        <Link to="/Login">Logout</Link>
+        <Link to="/Login" onClick={async ()=> await localStorage.clear()}>Logout</Link>
       </li>
     </ul>
   </nav>

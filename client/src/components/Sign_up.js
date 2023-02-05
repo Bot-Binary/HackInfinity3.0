@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom'
 import {POSTsignup} from '../utilities/axios/Paths'
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { useNavigate } from 'react-router-dom';
+ 
 export default function Sign_up() {
-
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(
     {
@@ -28,11 +29,22 @@ export default function Sign_up() {
   }
 
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     // console.log(formData);
-    const errors = POSTsignup(formData);
+    const Loggedin = await POSTsignup(formData);
     // toast('Here is your toast.');
+    if (formData.usertype === "parent") {
+      localStorage.setItem('Profile', JSON.stringify(Loggedin));
+      navigate('/Parent');
+    }
+    if (formData.usertype === "child") {
+      localStorage.setItem('Profile', JSON.stringify(Loggedin));
+      navigate('/Child');
+    }
+    else if (Loggedin === false) {
+      console.log("Hhhh");
+    }
   }
 
   return (
